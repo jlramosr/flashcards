@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet } from 'react-native'
-import { Foundation } from '@expo/vector-icons'
+import { View, Text, StyleSheet } from 'react-native'
 import { green, orange, black, white } from '../utils/colors'
 import TextButton from './TextButton'
-import { saveDeckTitle } from '../utils/api'
-import { NavigationActions } from 'react-navigation'
 import { getDeck } from '../utils/api'
 
 export default class DeckDetail extends Component {
@@ -27,8 +24,17 @@ export default class DeckDetail extends Component {
     )
   }
 
+  toAddCard = title => {
+    this.props.navigation.navigate('NewCard', {title})
+  }
+
+  toQuizDetail = questions => {
+    this.props.navigation.navigate('QuizDetail', {questions})
+  }
+
   render = () => {
     const { deck } = this.state
+    const { title } = this.props.navigation.state.params
 
     return (
       <View style={styles.container}>
@@ -37,18 +43,21 @@ export default class DeckDetail extends Component {
           <Text style={styles.infoCards}>{deck.questions.length} cards</Text>
         </View>
         <View>
-          <TextButton style={styles.buttonAddCard} onPress={() => {
-            saveDeckTitle(title).then(() =>
-              this.toHome()
-            )
-          }}>
+          <TextButton
+            style={styles.buttonAddCard}
+            onPress={() => {
+              this.toAddCard(title)
+            }}
+          >
             Add Card
           </TextButton>
-          <TextButton onPress={() => {
-            saveDeckTitle(title).then(() =>
-              this.toHome()
-            )
-          }}>
+          <TextButton 
+            disabled={!deck.questions.length}
+            style={{opacity: deck.questions.length ? 1 : 0.2}} 
+            onPress={() => {
+              this.toQuizDetail(deck.questions, 0)
+            }}
+          >
             Start Quiz
           </TextButton>
         </View>

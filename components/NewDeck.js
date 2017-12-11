@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet } from 'react-native'
-import { Foundation } from '@expo/vector-icons'
-import { green, white } from '../utils/colors'
+import { green } from '../utils/colors'
 import TextButton from './TextButton'
 import { saveDeckTitle } from '../utils/api'
-import { NavigationActions } from 'react-navigation'
 
 export default class NewDeck extends Component {
   state = {

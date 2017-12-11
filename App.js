@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, Platform, StatusBar } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import { green, yellow, white, orange, black } from './utils/colors'
 import DeckList from './components/DeckList'
-import DeckDetail from './components/DeckDetail'
 import NewDeck from './components/NewDeck'
+import DeckDetail from './components/DeckDetail'
+import NewCard from './components/NewCard'
+import QuizDetail from './components/QuizDetail'
 
 const AppBar = ({backgroundColor, ...props}) => {
   return (
@@ -51,6 +52,26 @@ const AppNavigator = StackNavigator({
   DeckDetail: {
     screen: DeckDetail,
     navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black
+      }
+    }
+  },
+  QuizDetail: {
+    screen: QuizDetail,
+    navigationOptions: {
+      title: 'Quiz',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black
+      }
+    }
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      title: 'Add Card',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: black

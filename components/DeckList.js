@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet, Animated } from 'react-native'
-import { Foundation } from '@expo/vector-icons'
-import { green, grey, orange, white } from '../utils/colors'
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
+import { green, grey, orange } from '../utils/colors'
 import { getDecks } from '../utils/api'
 
 const Deck = ({ title, questions }) => {
@@ -45,7 +44,7 @@ export default class DeckList extends Component {
 
     if (!Object.keys(decks).length) {
       return (
-        <View>
+        <View style={styles.empty}>
           <Text>There is no decks yet</Text>
         </View>
       )
@@ -67,6 +66,11 @@ export default class DeckList extends Component {
 }
 
 const styles = StyleSheet.create({
+  empty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between'
