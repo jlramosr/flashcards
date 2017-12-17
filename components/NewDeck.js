@@ -3,14 +3,24 @@ import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet } from 'react-n
 import { green } from '../utils/colors'
 import TextButton from './TextButton'
 import { saveDeckTitle } from '../utils/api'
+import { NavigationActions } from 'react-navigation'
 
 export default class NewDeck extends Component {
   state = {
     title: ''
   }
 
-  toHome = () => {
-    this.props.navigation.navigate('Home')
+  toDeck = title => {
+    const { navigation } = this.props
+    this.setState({title: ''})
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home'}),
+      ]
+    })
+    navigation.dispatch(resetAction)
+    navigation.navigate('DeckDetail', {title})
   }
 
   handleTextChange = title => {
@@ -33,7 +43,7 @@ export default class NewDeck extends Component {
         </View>
         <TextButton style={styles.button} onPress={() => {
           saveDeckTitle(title).then(() =>
-            this.toHome()
+            this.toDeck(title)
           )
         }}>
           Submit

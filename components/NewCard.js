@@ -15,8 +15,9 @@ export default class NewCard extends Component {
     return {title}
   }
 
-  toHome = () => {
-    this.props.navigation.navigate('Home')
+  toDeckDetail = title => {
+    this.props.navigation.state.params.onNavigateBack()
+    this.props.navigation.goBack()
   }
 
   handleQuestionChange = question => {
@@ -55,7 +56,7 @@ export default class NewCard extends Component {
           onPress={() => {
             if (question && answer) {
               addCardToDeck(title, {question,answer}).then(() =>
-                this.toHome()
+                this.toDeckDetail(title)
               )
             }
           }}

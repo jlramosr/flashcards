@@ -17,10 +17,14 @@ export default class DeckList extends Component {
     decks: null
   }
 
-  componentDidMount = () => {
+  getDecksInfo = () => {
     getDecks().then(decks => 
       this.setState({decks})
     )
+  }
+
+  componentDidMount = () => {
+    this.getDecksInfo()
   }
 
   toDeckDetail = title => {

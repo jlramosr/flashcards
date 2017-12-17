@@ -8,6 +8,7 @@ import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
 import NewCard from './components/NewCard'
 import QuizDetail from './components/QuizDetail'
+import { setLocalNotification } from './utils/helpers'
 
 const AppBar = ({backgroundColor, ...props}) => {
   return (
@@ -81,6 +82,10 @@ const AppNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount = () => {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>

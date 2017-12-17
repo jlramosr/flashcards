@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Platform, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { green, red, orange } from '../utils/colors'
+import { green, red, orange, white, black } from '../utils/colors'
 import TextButton from './TextButton'
 import { getDeck } from '../utils/api'
-
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 export default class QuizDetail extends Component {
   state = {
@@ -22,9 +22,34 @@ export default class QuizDetail extends Component {
     const { mode, numQuiz, numCorrects } = this.state
 
     if (numQuiz === questions.length) {
+      clearLocalNotification().then(
+        setLocalNotification
+      )
       return (
         <View style={styles.container}>
           <Text style={styles.results}>{`You have guessed ${numCorrects*100/questions.length}% of the answers`}</Text>
+          <View>
+            <TextButton
+              style={styles.buttonBack}
+              onPress={() => {
+                this.props.navigation.goBack()
+              }}
+            >
+              Back to Deck
+            </TextButton>
+            <TextButton
+              style={styles.buttonRestart}
+              onPress={() => {
+                this.setState(prevState => ({
+                  numQuiz: 0,
+                  numCorrects: 0,
+                  mode: 'Question'
+                }))
+              }}
+            >
+              Restart Quiz
+            </TextButton>
+          </View>
         </View>
       )
     }
@@ -124,5 +149,12 @@ const styles = StyleSheet.create({
   },
   buttonIncorrect: {
     backgroundColor: red
+  },
+  buttonRestart: {
+    backgroundColor: black
+  },
+  buttonBack: {
+    color: black,
+    backgroundColor: white
   }
 })
