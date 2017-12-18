@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
 import { green, grey, orange } from '../utils/colors'
-import { getDecks } from '../utils/api'
 
 const Deck = ({ title, questions }) => {
   return (
@@ -13,20 +12,6 @@ const Deck = ({ title, questions }) => {
 }
 
 export default class DeckList extends Component {
-  state = {
-    decks: null
-  }
-
-  getDecksInfo = () => {
-    getDecks().then(decks => 
-      this.setState({decks})
-    )
-  }
-
-  componentDidMount = () => {
-    this.getDecksInfo()
-  }
-
   toDeckDetail = title => {
     this.props.navigation.navigate('DeckDetail', {title})
   }
@@ -40,7 +25,7 @@ export default class DeckList extends Component {
   }
 
   render = () => {
-    const { decks } = this.state
+    const decks  = this.props.screenProps ? this.props.screenProps.decks : null
 
     if (!decks) {
       return <ActivityIndicator />

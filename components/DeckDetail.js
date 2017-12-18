@@ -29,7 +29,11 @@ export default class DeckDetail extends Component {
   }
 
   toAddCard = title => {
-    this.props.navigation.navigate('NewCard', {title, onNavigateBack: this.getDeckInfo})
+    const { navigation } = this.props
+    navigation.navigate('NewCard', {
+      title,
+      updateDeck: this.getDeckInfo
+    })
   }
 
   toQuizDetail = questions => {

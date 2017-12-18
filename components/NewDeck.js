@@ -11,16 +11,19 @@ export default class NewDeck extends Component {
   }
 
   toDeck = title => {
-    const { navigation } = this.props
-    this.setState({title: ''})
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Home'}),
-      ]
-    })
-    navigation.dispatch(resetAction)
-    navigation.navigate('DeckDetail', {title})
+    if (title) {
+      const { navigation, screenProps } = this.props
+      screenProps.updateDecks()
+      this.setState({title: ''})
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Home'}),
+        ]
+      })
+      navigation.dispatch(resetAction)
+      navigation.navigate('DeckDetail', {title})
+    }
   }
 
   handleTextChange = title => {
@@ -41,11 +44,16 @@ export default class NewDeck extends Component {
             placeholder="Deck Title"
           />
         </View>
-        <TextButton style={styles.button} onPress={() => {
-          saveDeckTitle(title).then(() =>
-            this.toDeck(title)
-          )
-        }}>
+        <TextButton
+          style={styles.button}
+          disabled={!title}
+          style={{opacity: title ? 1 : 0.2}}
+          onPress={() => {
+            saveDeckTitle(title).then(() =>
+              this.toDeck(title)
+            )
+          }
+        }>
           Submit
         </TextButton>
       </KeyboardAvoidingView>

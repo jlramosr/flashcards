@@ -16,8 +16,10 @@ export default class NewCard extends Component {
   }
 
   toDeckDetail = title => {
-    this.props.navigation.state.params.onNavigateBack()
-    this.props.navigation.goBack()
+    const { navigation, screenProps } = this.props
+    navigation.state.params.updateDeck()
+    navigation.goBack()
+    screenProps.updateDecks()
   }
 
   handleQuestionChange = question => {
